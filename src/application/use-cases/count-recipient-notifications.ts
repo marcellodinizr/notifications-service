@@ -19,9 +19,7 @@ export class CountRecipientNotifications {
   ): Promise<CountRecipientNotificationResponse> {
     const { recipientId } = request;
 
-    const count = await this.notificationsRepository.countManyByRecipientId(
-      recipientId,
-    );
+    const count = await this.notificationsRepository.countManyByRecipientId(recipientId);
 
     return { count };
   }
