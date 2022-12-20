@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { Replace } from 'src/helpers/Replace';
+
 import { Content } from './content';
 
 export interface NotificationProps {
@@ -16,8 +17,8 @@ export class Notification {
   private props: NotificationProps;
 
   // helpers: Replace -> if informed, we use it, otherwise we use the current date
-  constructor(props: Replace<NotificationProps, { createdAt?: Date }>) {
-    this._id = randomUUID();
+  constructor(props: Replace<NotificationProps, { createdAt?: Date }>, id?: string) {
+    this._id = id ?? randomUUID();
     this.props = {
       ...props,
       createdAt: props.createdAt ?? new Date(),
@@ -56,8 +57,12 @@ export class Notification {
     return this.props.readAt;
   }
 
-  public set readAt(readAt: Date | null | undefined) {
-    this.props.readAt = readAt;
+  public read() {
+    this.props.readAt = new Date();
+  }
+
+  public unread() {
+    this.props.readAt = null;
   }
 
   public cancel() {
